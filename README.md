@@ -59,4 +59,64 @@ The final step involved removing data that provided no analytical value.
 | **Quality** | Removed rows with no layoff metrics. | Cleanses the dataset for more accurate statistical modeling. |
 
 ---
+## Data Exploration Report: Global Layoffs Analysis
+
+This report summarizes the findings from the Exploratory Data Analysis (EDA) conducted on the `world_layoffs` dataset. The analysis transitions from high-level metrics to granular insights regarding company performance, industry trends, and chronological patterns.
+
+---
+
+### 1. Key Performance Indicators (KPIs)
+
+The initial exploration focused on identifying the scale of individual layoff events and the severity of company closures.
+
+* **Maximum Single Event:** The largest single layoff event recorded in the dataset reached a peak that highlights the volatility of the tech sector during this period.
+* **Total Liquidations:** Multiple companies reported a `percentage_laid_off` of **1 (100%)**, indicating complete shutdowns.
+* **High-Stakes Failures:** Notable companies like **Quibi** and **BritishVolt** appear in the 100% layoff category despite having raised massive capital (upwards of $2 billion in Quibi's case), illustrating that high funding does not always guarantee sustainability.
+
+---
+
+### 2. Layoffs by Category
+
+The data was aggregated to identify which sectors and regions bore the brunt of the economic shift.
+
+#### **Top Entities and Locations**
+
+* **Companies:** When aggregating total layoffs over the entire period, the "Big Tech" firms dominate the list, showing that while startups folded completely, large corporations shed the highest absolute number of employees.
+* **Geography:** The **United States** consistently ranks as the country with the highest number of layoffs, with specific tech hubs (locations) showing concentrated job losses.
+* **Industry:** The impact varied significantly across sectors, with industries like **Consumer** and **Retail** often appearing at the top of the list for total redundancies.
+
+#### **Company Funding Stage**
+
+The analysis shows a correlation between a company's "Stage" and its layoff volume. Post-IPO companies tend to have higher absolute numbers due to their size, while early-stage startups show higher frequency in the 100% layoff bracket.
+
+---
+
+### 3. Temporal Trends and Trajectory
+
+Using advanced window functions and Common Table Expressions (CTEs), we identified how the layoff landscape evolved over time.
+
+#### **Annual Leaders**
+
+By ranking the top three companies for layoffs each year, we can see the shifting "epicenter" of the crisis:
+
+* **Year-over-Year:** The companies appearing in the Top 3 change annually, suggesting that different sectors (e.g., Travel during the pandemic vs. Finance/AI shifts later) were impacted at different stages.
+
+#### **The Rolling Total**
+
+The most telling metric is the **Monthly Rolling Total**, which provides a "pulse" of the global economy.
+
+* **Monthly Growth:** By extracting the month from the date strings, the analysis reveals specific "spike" months where layoffs accelerated globally.
+* **Cumulative Impact:** The rolling total CTE demonstrates a steady, compounding increase in job losses, allowing stakeholders to see the aggregate human impact of the market downturn.
+
+---
+
+### 4. Summary of Methodology
+
+The analysis was performed using several sophisticated SQL techniques to ensure data integrity and depth:
+
+* **CTEs (Common Table Expressions):** Used to break down complex logic, such as calculating yearly rankings and monthly aggregations.
+* **Window Functions:** `DENSE_RANK()` was utilized to compare companies within specific years, and `SUM() OVER()` was used to create the rolling progression of layoffs.
+* **Data Cleaning Assumptions:** The script filters for `NULL` values in critical fields like `percentage_laid_off` and `years` to ensure the insights are based on actionable data.
+
+---
 
